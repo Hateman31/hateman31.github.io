@@ -2,27 +2,27 @@ goog.loadModule(function(exports) {
   "use strict";
   goog.module("goog.array");
   goog.module.declareLegacyNamespace();
-  const asserts = goog.require("goog.asserts");
+  var asserts = goog.require("goog.asserts");
   goog.NATIVE_ARRAY_PROTOTYPES = goog.define("goog.NATIVE_ARRAY_PROTOTYPES", goog.TRUSTED_SITE);
-  const ASSUME_NATIVE_FUNCTIONS = goog.define("goog.array.ASSUME_NATIVE_FUNCTIONS", goog.FEATURESET_YEAR > 2012);
+  var ASSUME_NATIVE_FUNCTIONS = goog.define("goog.array.ASSUME_NATIVE_FUNCTIONS", goog.FEATURESET_YEAR > 2012);
   exports.ASSUME_NATIVE_FUNCTIONS = ASSUME_NATIVE_FUNCTIONS;
   function peek(array) {
     return array[array.length - 1];
   }
   exports.peek = peek;
   exports.last = peek;
-  const indexOf = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.indexOf) ? function(arr, obj, opt_fromIndex) {
+  var indexOf = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.indexOf) ? function(arr, obj, opt_fromIndex) {
     asserts.assert(arr.length != null);
     return Array.prototype.indexOf.call(arr, obj, opt_fromIndex);
   } : function(arr, obj, opt_fromIndex) {
-    const fromIndex = opt_fromIndex == null ? 0 : opt_fromIndex < 0 ? Math.max(0, arr.length + opt_fromIndex) : opt_fromIndex;
+    var fromIndex = opt_fromIndex == null ? 0 : opt_fromIndex < 0 ? Math.max(0, arr.length + opt_fromIndex) : opt_fromIndex;
     if (typeof arr === "string") {
       if (typeof obj !== "string" || obj.length != 1) {
         return -1;
       }
       return arr.indexOf(obj, fromIndex);
     }
-    for (let i = fromIndex; i < arr.length; i++) {
+    for (var i = fromIndex; i < arr.length; i++) {
       if (i in arr && arr[i] === obj) {
         return i;
       }
@@ -30,12 +30,12 @@ goog.loadModule(function(exports) {
     return -1;
   };
   exports.indexOf = indexOf;
-  const lastIndexOf = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.lastIndexOf) ? function(arr, obj, opt_fromIndex) {
+  var lastIndexOf = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.lastIndexOf) ? function(arr, obj, opt_fromIndex) {
     asserts.assert(arr.length != null);
-    const fromIndex = opt_fromIndex == null ? arr.length - 1 : opt_fromIndex;
+    var fromIndex = opt_fromIndex == null ? arr.length - 1 : opt_fromIndex;
     return Array.prototype.lastIndexOf.call(arr, obj, fromIndex);
   } : function(arr, obj, opt_fromIndex) {
-    let fromIndex = opt_fromIndex == null ? arr.length - 1 : opt_fromIndex;
+    var fromIndex = opt_fromIndex == null ? arr.length - 1 : opt_fromIndex;
     if (fromIndex < 0) {
       fromIndex = Math.max(0, arr.length + fromIndex);
     }
@@ -45,7 +45,7 @@ goog.loadModule(function(exports) {
       }
       return arr.lastIndexOf(obj, fromIndex);
     }
-    for (let i = fromIndex; i >= 0; i--) {
+    for (var i = fromIndex; i >= 0; i--) {
       if (i in arr && arr[i] === obj) {
         return i;
       }
@@ -53,13 +53,13 @@ goog.loadModule(function(exports) {
     return -1;
   };
   exports.lastIndexOf = lastIndexOf;
-  const forEach = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.forEach) ? function(arr, f, opt_obj) {
+  var forEach = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.forEach) ? function(arr, f, opt_obj) {
     asserts.assert(arr.length != null);
     Array.prototype.forEach.call(arr, f, opt_obj);
   } : function(arr, f, opt_obj) {
-    const l = arr.length;
-    const arr2 = typeof arr === "string" ? arr.split("") : arr;
-    for (let i = 0; i < l; i++) {
+    var l = arr.length;
+    var arr2 = typeof arr === "string" ? arr.split("") : arr;
+    for (var i = 0; i < l; i++) {
       if (i in arr2) {
         f.call(opt_obj, arr2[i], i, arr);
       }
@@ -67,26 +67,26 @@ goog.loadModule(function(exports) {
   };
   exports.forEach = forEach;
   function forEachRight(arr, f, opt_obj) {
-    const l = arr.length;
-    const arr2 = typeof arr === "string" ? arr.split("") : arr;
-    for (let i = l - 1; i >= 0; --i) {
+    var l = arr.length;
+    var arr2 = typeof arr === "string" ? arr.split("") : arr;
+    for (var i = l - 1; i >= 0; --i) {
       if (i in arr2) {
         f.call(opt_obj, arr2[i], i, arr);
       }
     }
   }
   exports.forEachRight = forEachRight;
-  const filter = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.filter) ? function(arr, f, opt_obj) {
+  var filter = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.filter) ? function(arr, f, opt_obj) {
     asserts.assert(arr.length != null);
     return Array.prototype.filter.call(arr, f, opt_obj);
   } : function(arr, f, opt_obj) {
-    const l = arr.length;
-    const res = [];
-    let resLength = 0;
-    const arr2 = typeof arr === "string" ? arr.split("") : arr;
-    for (let i = 0; i < l; i++) {
+    var l = arr.length;
+    var res = [];
+    var resLength = 0;
+    var arr2 = typeof arr === "string" ? arr.split("") : arr;
+    for (var i = 0; i < l; i++) {
       if (i in arr2) {
-        const val = arr2[i];
+        var val = arr2[i];
         if (f.call(opt_obj, val, i, arr)) {
           res[resLength++] = val;
         }
@@ -95,14 +95,14 @@ goog.loadModule(function(exports) {
     return res;
   };
   exports.filter = filter;
-  const map = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.map) ? function(arr, f, opt_obj) {
+  var map = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.map) ? function(arr, f, opt_obj) {
     asserts.assert(arr.length != null);
     return Array.prototype.map.call(arr, f, opt_obj);
   } : function(arr, f, opt_obj) {
-    const l = arr.length;
-    const res = new Array(l);
-    const arr2 = typeof arr === "string" ? arr.split("") : arr;
-    for (let i = 0; i < l; i++) {
+    var l = arr.length;
+    var res = new Array(l);
+    var arr2 = typeof arr === "string" ? arr.split("") : arr;
+    for (var i = 0; i < l; i++) {
       if (i in arr2) {
         res[i] = f.call(opt_obj, arr2[i], i, arr);
       }
@@ -110,21 +110,21 @@ goog.loadModule(function(exports) {
     return res;
   };
   exports.map = map;
-  const reduce = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.reduce) ? function(arr, f, val, opt_obj) {
+  var reduce = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.reduce) ? function(arr, f, val, opt_obj) {
     asserts.assert(arr.length != null);
     if (opt_obj) {
       f = goog.bind(f, opt_obj);
     }
     return Array.prototype.reduce.call(arr, f, val);
   } : function(arr, f, val, opt_obj) {
-    let rval = val;
+    var rval = val;
     forEach(arr, function(val, index) {
       rval = f.call(opt_obj, rval, val, index, arr);
     });
     return rval;
   };
   exports.reduce = reduce;
-  const reduceRight = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.reduceRight) ? function(arr, f, val, opt_obj) {
+  var reduceRight = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.reduceRight) ? function(arr, f, val, opt_obj) {
     asserts.assert(arr.length != null);
     asserts.assert(f != null);
     if (opt_obj) {
@@ -132,20 +132,20 @@ goog.loadModule(function(exports) {
     }
     return Array.prototype.reduceRight.call(arr, f, val);
   } : function(arr, f, val, opt_obj) {
-    let rval = val;
+    var rval = val;
     forEachRight(arr, function(val, index) {
       rval = f.call(opt_obj, rval, val, index, arr);
     });
     return rval;
   };
   exports.reduceRight = reduceRight;
-  const some = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.some) ? function(arr, f, opt_obj) {
+  var some = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.some) ? function(arr, f, opt_obj) {
     asserts.assert(arr.length != null);
     return Array.prototype.some.call(arr, f, opt_obj);
   } : function(arr, f, opt_obj) {
-    const l = arr.length;
-    const arr2 = typeof arr === "string" ? arr.split("") : arr;
-    for (let i = 0; i < l; i++) {
+    var l = arr.length;
+    var arr2 = typeof arr === "string" ? arr.split("") : arr;
+    for (var i = 0; i < l; i++) {
       if (i in arr2 && f.call(opt_obj, arr2[i], i, arr)) {
         return true;
       }
@@ -153,13 +153,13 @@ goog.loadModule(function(exports) {
     return false;
   };
   exports.some = some;
-  const every = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.every) ? function(arr, f, opt_obj) {
+  var every = goog.NATIVE_ARRAY_PROTOTYPES && (ASSUME_NATIVE_FUNCTIONS || Array.prototype.every) ? function(arr, f, opt_obj) {
     asserts.assert(arr.length != null);
     return Array.prototype.every.call(arr, f, opt_obj);
   } : function(arr, f, opt_obj) {
-    const l = arr.length;
-    const arr2 = typeof arr === "string" ? arr.split("") : arr;
-    for (let i = 0; i < l; i++) {
+    var l = arr.length;
+    var arr2 = typeof arr === "string" ? arr.split("") : arr;
+    for (var i = 0; i < l; i++) {
       if (i in arr2 && !f.call(opt_obj, arr2[i], i, arr)) {
         return false;
       }
@@ -168,7 +168,7 @@ goog.loadModule(function(exports) {
   };
   exports.every = every;
   function count(arr, f, opt_obj) {
-    let count = 0;
+    var count = 0;
     forEach(arr, function(element, index, arr) {
       if (f.call(opt_obj, element, index, arr)) {
         ++count;
@@ -178,14 +178,14 @@ goog.loadModule(function(exports) {
   }
   exports.count = count;
   function find(arr, f, opt_obj) {
-    const i = findIndex(arr, f, opt_obj);
+    var i = findIndex(arr, f, opt_obj);
     return i < 0 ? null : typeof arr === "string" ? arr.charAt(i) : arr[i];
   }
   exports.find = find;
   function findIndex(arr, f, opt_obj) {
-    const l = arr.length;
-    const arr2 = typeof arr === "string" ? arr.split("") : arr;
-    for (let i = 0; i < l; i++) {
+    var l = arr.length;
+    var arr2 = typeof arr === "string" ? arr.split("") : arr;
+    for (var i = 0; i < l; i++) {
       if (i in arr2 && f.call(opt_obj, arr2[i], i, arr)) {
         return i;
       }
@@ -194,14 +194,14 @@ goog.loadModule(function(exports) {
   }
   exports.findIndex = findIndex;
   function findRight(arr, f, opt_obj) {
-    const i = findIndexRight(arr, f, opt_obj);
+    var i = findIndexRight(arr, f, opt_obj);
     return i < 0 ? null : typeof arr === "string" ? arr.charAt(i) : arr[i];
   }
   exports.findRight = findRight;
   function findIndexRight(arr, f, opt_obj) {
-    const l = arr.length;
-    const arr2 = typeof arr === "string" ? arr.split("") : arr;
-    for (let i = l - 1; i >= 0; i--) {
+    var l = arr.length;
+    var arr2 = typeof arr === "string" ? arr.split("") : arr;
+    for (var i = l - 1; i >= 0; i--) {
       if (i in arr2 && f.call(opt_obj, arr2[i], i, arr)) {
         return i;
       }
@@ -219,7 +219,7 @@ goog.loadModule(function(exports) {
   exports.isEmpty = isEmpty;
   function clear(arr) {
     if (!Array.isArray(arr)) {
-      for (let i = arr.length - 1; i >= 0; i--) {
+      for (var i = arr.length - 1; i >= 0; i--) {
         delete arr[i];
       }
     }
@@ -241,7 +241,7 @@ goog.loadModule(function(exports) {
   }
   exports.insertArrayAt = insertArrayAt;
   function insertBefore(arr, obj, opt_obj2) {
-    let i;
+    var i;
     if (arguments.length == 2 || (i = indexOf(arr, opt_obj2)) < 0) {
       arr.push(obj);
     } else {
@@ -250,8 +250,8 @@ goog.loadModule(function(exports) {
   }
   exports.insertBefore = insertBefore;
   function remove(arr, obj) {
-    const i = indexOf(arr, obj);
-    let rv;
+    var i = indexOf(arr, obj);
+    var rv;
     if (rv = i >= 0) {
       removeAt(arr, i);
     }
@@ -259,7 +259,7 @@ goog.loadModule(function(exports) {
   }
   exports.remove = remove;
   function removeLast(arr, obj) {
-    const i = lastIndexOf(arr, obj);
+    var i = lastIndexOf(arr, obj);
     if (i >= 0) {
       removeAt(arr, i);
       return true;
@@ -273,7 +273,7 @@ goog.loadModule(function(exports) {
   }
   exports.removeAt = removeAt;
   function removeIf(arr, f, opt_obj) {
-    const i = findIndex(arr, f, opt_obj);
+    var i = findIndex(arr, f, opt_obj);
     if (i >= 0) {
       removeAt(arr, i);
       return true;
@@ -282,7 +282,7 @@ goog.loadModule(function(exports) {
   }
   exports.removeIf = removeIf;
   function removeAllIf(arr, f, opt_obj) {
-    let removedCount = 0;
+    var removedCount = 0;
     forEachRight(arr, function(val, index) {
       if (f.call(opt_obj, val, index, arr)) {
         if (removeAt(arr, index)) {
@@ -302,10 +302,10 @@ goog.loadModule(function(exports) {
   }
   exports.join = join;
   function toArray(object) {
-    const length = object.length;
+    var length = object.length;
     if (length > 0) {
-      const rv = new Array(length);
-      for (let i = 0; i < length; i++) {
+      var rv = new Array(length);
+      for (var i = 0; i < length; i++) {
         rv[i] = object[i];
       }
       return rv;
@@ -313,16 +313,16 @@ goog.loadModule(function(exports) {
     return [];
   }
   exports.toArray = toArray;
-  const clone = toArray;
+  var clone = toArray;
   exports.clone = clone;
   function extend(arr1, var_args) {
-    for (let i = 1; i < arguments.length; i++) {
-      const arr2 = arguments[i];
+    for (var i = 1; i < arguments.length; i++) {
+      var arr2 = arguments[i];
       if (goog.isArrayLike(arr2)) {
-        const len1 = arr1.length || 0;
-        const len2 = arr2.length || 0;
+        var len1 = arr1.length || 0;
+        var len2 = arr2.length || 0;
         arr1.length = len1 + len2;
-        for (let j = 0; j < len2; j++) {
+        for (var j = 0; j < len2; j++) {
           arr1[len1 + j] = arr2[j];
         }
       } else {
@@ -346,17 +346,17 @@ goog.loadModule(function(exports) {
   }
   exports.slice = slice;
   function removeDuplicates(arr, opt_rv, opt_hashFn) {
-    const returnArray = opt_rv || arr;
-    const defaultHashFn = function(item) {
+    var returnArray = opt_rv || arr;
+    var defaultHashFn = function(item) {
       return goog.isObject(item) ? "o" + goog.getUid(item) : (typeof item).charAt(0) + item;
     };
-    const hashFn = opt_hashFn || defaultHashFn;
-    let cursorInsert = 0;
-    let cursorRead = 0;
-    const seen = {};
+    var hashFn = opt_hashFn || defaultHashFn;
+    var cursorInsert = 0;
+    var cursorRead = 0;
+    var seen = {};
     while (cursorRead < arr.length) {
-      const current = arr[cursorRead++];
-      const key = hashFn(current);
+      var current = arr[cursorRead++];
+      var key = hashFn(current);
       if (!Object.prototype.hasOwnProperty.call(seen, key)) {
         seen[key] = true;
         returnArray[cursorInsert++] = current;
@@ -374,12 +374,12 @@ goog.loadModule(function(exports) {
   }
   exports.binarySelect = binarySelect;
   function binarySearch_(arr, compareFn, isEvaluator, opt_target, opt_selfObj) {
-    let left = 0;
-    let right = arr.length;
-    let found;
+    var left = 0;
+    var right = arr.length;
+    var found;
     while (left < right) {
-      const middle = left + (right - left >>> 1);
-      let compareResult;
+      var middle = left + (right - left >>> 1);
+      var compareResult = void 0;
       if (isEvaluator) {
         compareResult = compareFn.call(opt_selfObj, arr[middle], middle, arr);
       } else {
@@ -399,22 +399,22 @@ goog.loadModule(function(exports) {
   }
   exports.sort = sort;
   function stableSort(arr, opt_compareFn) {
-    const compArr = new Array(arr.length);
-    for (let i = 0; i < arr.length; i++) {
+    var compArr = new Array(arr.length);
+    for (var i = 0; i < arr.length; i++) {
       compArr[i] = {index:i, value:arr[i]};
     }
-    const valueCompareFn = opt_compareFn || defaultCompare;
+    var valueCompareFn = opt_compareFn || defaultCompare;
     function stableCompareFn(obj1, obj2) {
       return valueCompareFn(obj1.value, obj2.value) || obj1.index - obj2.index;
     }
     sort(compArr, stableCompareFn);
-    for (let i = 0; i < arr.length; i++) {
-      arr[i] = compArr[i].value;
+    for (var i$6 = 0; i$6 < arr.length; i$6++) {
+      arr[i$6] = compArr[i$6].value;
     }
   }
   exports.stableSort = stableSort;
   function sortByKey(arr, keyFn, opt_compareFn) {
-    const keyCompareFn = opt_compareFn || defaultCompare;
+    var keyCompareFn = opt_compareFn || defaultCompare;
     sort(arr, function(a, b) {
       return keyCompareFn(keyFn(a), keyFn(b));
     });
@@ -427,9 +427,9 @@ goog.loadModule(function(exports) {
   }
   exports.sortObjectsByKey = sortObjectsByKey;
   function isSorted(arr, opt_compareFn, opt_strict) {
-    const compare = opt_compareFn || defaultCompare;
-    for (let i = 1; i < arr.length; i++) {
-      const compareResult = compare(arr[i - 1], arr[i]);
+    var compare = opt_compareFn || defaultCompare;
+    for (var i = 1; i < arr.length; i++) {
+      var compareResult = compare(arr[i - 1], arr[i]);
       if (compareResult > 0 || compareResult == 0 && opt_strict) {
         return false;
       }
@@ -441,9 +441,9 @@ goog.loadModule(function(exports) {
     if (!goog.isArrayLike(arr1) || !goog.isArrayLike(arr2) || arr1.length != arr2.length) {
       return false;
     }
-    const l = arr1.length;
-    const equalsFn = opt_equalsFn || defaultCompareEquality;
-    for (let i = 0; i < l; i++) {
+    var l = arr1.length;
+    var equalsFn = opt_equalsFn || defaultCompareEquality;
+    for (var i = 0; i < l; i++) {
       if (!equalsFn(arr1[i], arr2[i])) {
         return false;
       }
@@ -452,10 +452,10 @@ goog.loadModule(function(exports) {
   }
   exports.equals = equals;
   function compare3(arr1, arr2, opt_compareFn) {
-    const compare = opt_compareFn || defaultCompare;
-    const l = Math.min(arr1.length, arr2.length);
-    for (let i = 0; i < l; i++) {
-      const result = compare(arr1[i], arr2[i]);
+    var compare = opt_compareFn || defaultCompare;
+    var l = Math.min(arr1.length, arr2.length);
+    for (var i = 0; i < l; i++) {
+      var result = compare(arr1[i], arr2[i]);
       if (result != 0) {
         return result;
       }
@@ -476,7 +476,7 @@ goog.loadModule(function(exports) {
   }
   exports.defaultCompareEquality = defaultCompareEquality;
   function binaryInsert(array, value, opt_compareFn) {
-    const index = binarySearch(array, value, opt_compareFn);
+    var index = binarySearch(array, value, opt_compareFn);
     if (index < 0) {
       insertAt(array, value, -(index + 1));
       return true;
@@ -485,42 +485,42 @@ goog.loadModule(function(exports) {
   }
   exports.binaryInsert = binaryInsert;
   function binaryRemove(array, value, opt_compareFn) {
-    const index = binarySearch(array, value, opt_compareFn);
+    var index = binarySearch(array, value, opt_compareFn);
     return index >= 0 ? removeAt(array, index) : false;
   }
   exports.binaryRemove = binaryRemove;
   function bucket(array, sorter, opt_obj) {
-    const buckets = {};
-    for (let i = 0; i < array.length; i++) {
-      const value = array[i];
-      const key = sorter.call(opt_obj, value, i, array);
+    var buckets = {};
+    for (var i = 0; i < array.length; i++) {
+      var value = array[i];
+      var key = sorter.call(opt_obj, value, i, array);
       if (key !== undefined) {
-        const bucket = buckets[key] || (buckets[key] = []);
-        bucket.push(value);
+        var bucket$7 = buckets[key] || (buckets[key] = []);
+        bucket$7.push(value);
       }
     }
     return buckets;
   }
   exports.bucket = bucket;
   function bucketToMap(array, sorter) {
-    const buckets = new Map();
-    for (let i = 0; i < array.length; i++) {
-      const value = array[i];
-      const key = sorter(value, i, array);
+    var buckets = new Map();
+    for (var i = 0; i < array.length; i++) {
+      var value = array[i];
+      var key = sorter(value, i, array);
       if (key !== undefined) {
-        let bucket = buckets.get(key);
-        if (!bucket) {
-          bucket = [];
-          buckets.set(key, bucket);
+        var bucket$8 = buckets.get(key);
+        if (!bucket$8) {
+          bucket$8 = [];
+          buckets.set(key, bucket$8);
         }
-        bucket.push(value);
+        bucket$8.push(value);
       }
     }
     return buckets;
   }
   exports.bucketToMap = bucketToMap;
   function toObject(arr, keyFunc, opt_obj) {
-    const ret = {};
+    var ret = {};
     forEach(arr, function(element, index) {
       ret[keyFunc.call(opt_obj, element, index, arr)] = element;
     });
@@ -528,19 +528,19 @@ goog.loadModule(function(exports) {
   }
   exports.toObject = toObject;
   function toMap(arr, keyFunc) {
-    const map = new Map();
-    for (let i = 0; i < arr.length; i++) {
-      const element = arr[i];
+    var map = new Map();
+    for (var i = 0; i < arr.length; i++) {
+      var element = arr[i];
       map.set(keyFunc(element, i, arr), element);
     }
     return map;
   }
   exports.toMap = toMap;
   function range(startOrEnd, opt_end, opt_step) {
-    const array = [];
-    let start = 0;
-    let end = startOrEnd;
-    const step = opt_step || 1;
+    var array = [];
+    var start = 0;
+    var end = startOrEnd;
+    var step = opt_step || 1;
     if (opt_end !== undefined) {
       start = startOrEnd;
       end = opt_end;
@@ -549,35 +549,35 @@ goog.loadModule(function(exports) {
       return [];
     }
     if (step > 0) {
-      for (let i = start; i < end; i += step) {
+      for (var i = start; i < end; i += step) {
         array.push(i);
       }
     } else {
-      for (let i = start; i > end; i += step) {
-        array.push(i);
+      for (var i$9 = start; i$9 > end; i$9 += step) {
+        array.push(i$9);
       }
     }
     return array;
   }
   exports.range = range;
   function repeat(value, n) {
-    const array = [];
-    for (let i = 0; i < n; i++) {
+    var array = [];
+    for (var i = 0; i < n; i++) {
       array[i] = value;
     }
     return array;
   }
   exports.repeat = repeat;
   function flatten(var_args) {
-    const CHUNK_SIZE = 8192;
-    const result = [];
-    for (let i = 0; i < arguments.length; i++) {
-      const element = arguments[i];
+    var CHUNK_SIZE = 8192;
+    var result = [];
+    for (var i = 0; i < arguments.length; i++) {
+      var element = arguments[i];
       if (Array.isArray(element)) {
-        for (let c = 0; c < element.length; c += CHUNK_SIZE) {
-          const chunk = slice(element, c, c + CHUNK_SIZE);
-          const recurseResult = flatten.apply(null, chunk);
-          for (let r = 0; r < recurseResult.length; r++) {
+        for (var c = 0; c < element.length; c += CHUNK_SIZE) {
+          var chunk = slice(element, c, c + CHUNK_SIZE);
+          var recurseResult = flatten.apply(null, chunk);
+          for (var r = 0; r < recurseResult.length; r++) {
             result.push(recurseResult[r]);
           }
         }
@@ -604,7 +604,7 @@ goog.loadModule(function(exports) {
   function moveItem(arr, fromIndex, toIndex) {
     asserts.assert(fromIndex >= 0 && fromIndex < arr.length);
     asserts.assert(toIndex >= 0 && toIndex < arr.length);
-    const removedItems = Array.prototype.splice.call(arr, fromIndex, 1);
+    var removedItems = Array.prototype.splice.call(arr, fromIndex, 1);
     Array.prototype.splice.call(arr, toIndex, 0, removedItems[0]);
   }
   exports.moveItem = moveItem;
@@ -612,17 +612,17 @@ goog.loadModule(function(exports) {
     if (!arguments.length) {
       return [];
     }
-    const result = [];
-    let minLen = arguments[0].length;
-    for (let i = 1; i < arguments.length; i++) {
+    var result = [];
+    var minLen = arguments[0].length;
+    for (var i = 1; i < arguments.length; i++) {
       if (arguments[i].length < minLen) {
         minLen = arguments[i].length;
       }
     }
-    for (let i = 0; i < minLen; i++) {
-      const value = [];
-      for (let j = 0; j < arguments.length; j++) {
-        value.push(arguments[j][i]);
+    for (var i$10 = 0; i$10 < minLen; i$10++) {
+      var value = [];
+      for (var j = 0; j < arguments.length; j++) {
+        value.push(arguments[j][i$10]);
       }
       result.push(value);
     }
@@ -630,17 +630,17 @@ goog.loadModule(function(exports) {
   }
   exports.zip = zip;
   function shuffle(arr, opt_randFn) {
-    const randFn = opt_randFn || Math.random;
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(randFn() * (i + 1));
-      const tmp = arr[i];
+    var randFn = opt_randFn || Math.random;
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(randFn() * (i + 1));
+      var tmp = arr[i];
       arr[i] = arr[j];
       arr[j] = tmp;
     }
   }
   exports.shuffle = shuffle;
   function copyByIndex(arr, index_arr) {
-    const result = [];
+    var result = [];
     forEach(index_arr, function(index) {
       result.push(arr[index]);
     });

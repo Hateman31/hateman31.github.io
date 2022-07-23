@@ -2,11 +2,11 @@ goog.loadModule(function(exports) {
   "use strict";
   goog.module("goog.debug.Error");
   goog.module.declareLegacyNamespace();
-  function DebugError(msg = undefined, cause = undefined) {
+  function DebugError(msg, cause) {
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, DebugError);
     } else {
-      const stack = (new Error()).stack;
+      var stack = (new Error()).stack;
       if (stack) {
         this.stack = stack;
       }

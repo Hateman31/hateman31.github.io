@@ -708,7 +708,7 @@ if (!COMPILED && goog.DEPENDENCIES_ENABLED) {
       return evalCheck("({...rest}\x3d{}),1");
     });
     addNewerLanguageTranspilationCheck("es_2019", function() {
-      return evalCheck('let r;try{r\x3d" "}catch{};r');
+      return evalCheck('let r;try{r\x3d"\u2029"}catch{};r');
     });
     addNewerLanguageTranspilationCheck("es_2020", function() {
       return evalCheck("null?.x??1");

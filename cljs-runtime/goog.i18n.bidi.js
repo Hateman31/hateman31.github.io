@@ -79,8 +79,8 @@ goog.i18n.bidi.isRtlLanguage = function(lang) {
 };
 goog.i18n.bidi.bracketGuardTextRe_ = /(\(.*?\)+)|(\[.*?\]+)|(\{.*?\}+)|(<.*?>+)/g;
 goog.i18n.bidi.guardBracketInText = function(s, opt_isRtlContext) {
-  const useRtl = opt_isRtlContext === undefined ? goog.i18n.bidi.hasAnyRtl(s) : opt_isRtlContext;
-  const mark = useRtl ? goog.i18n.bidi.Format.RLM : goog.i18n.bidi.Format.LRM;
+  var useRtl = opt_isRtlContext === undefined ? goog.i18n.bidi.hasAnyRtl(s) : opt_isRtlContext;
+  var mark = useRtl ? goog.i18n.bidi.Format.RLM : goog.i18n.bidi.Format.LRM;
   return s.replace(goog.i18n.bidi.bracketGuardTextRe_, mark + "$\x26" + mark);
 };
 goog.i18n.bidi.enforceRtlInHtml = function(html) {
@@ -117,12 +117,12 @@ goog.i18n.bidi.wordSeparatorRe_ = /\s+/;
 goog.i18n.bidi.hasNumeralsRe_ = /[\d\u06f0-\u06f9]/;
 goog.i18n.bidi.rtlDetectionThreshold_ = 0.40;
 goog.i18n.bidi.estimateDirection = function(str, opt_isHtml) {
-  let rtlCount = 0;
-  let totalCount = 0;
-  let hasWeaklyLtr = false;
-  const tokens = goog.i18n.bidi.stripHtmlIfNeeded_(str, opt_isHtml).split(goog.i18n.bidi.wordSeparatorRe_);
-  for (let i = 0; i < tokens.length; i++) {
-    const token = tokens[i];
+  var rtlCount = 0;
+  var totalCount = 0;
+  var hasWeaklyLtr = false;
+  var tokens = goog.i18n.bidi.stripHtmlIfNeeded_(str, opt_isHtml).split(goog.i18n.bidi.wordSeparatorRe_);
+  for (var i = 0; i < tokens.length; i++) {
+    var token = tokens[i];
     if (goog.i18n.bidi.startsWithRtl(token)) {
       rtlCount++;
       totalCount++;
@@ -141,7 +141,7 @@ goog.i18n.bidi.detectRtlDirectionality = function(str, opt_isHtml) {
 };
 goog.i18n.bidi.setElementDirAndAlign = function(element, dir) {
   if (element) {
-    const htmlElement = element;
+    var htmlElement = element;
     dir = goog.i18n.bidi.toDir(dir);
     if (dir) {
       htmlElement.style.textAlign = dir == goog.i18n.bidi.Dir.RTL ? goog.i18n.bidi.RIGHT : goog.i18n.bidi.LEFT;
@@ -150,7 +150,7 @@ goog.i18n.bidi.setElementDirAndAlign = function(element, dir) {
   }
 };
 goog.i18n.bidi.setElementDirByTextDirectionality = function(element, text) {
-  const htmlElement = element;
+  var htmlElement = element;
   switch(goog.i18n.bidi.estimateDirection(text)) {
     case goog.i18n.bidi.Dir.LTR:
       if (htmlElement.dir !== "ltr") {

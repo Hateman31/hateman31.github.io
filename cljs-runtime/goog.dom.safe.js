@@ -152,8 +152,8 @@ goog.dom.safe.setLinkHrefAndRel = function(link, url, rel) {
   if (goog.string.internal.caseInsensitiveContains(rel, "stylesheet")) {
     goog.asserts.assert(url instanceof goog.html.TrustedResourceUrl, 'URL must be TrustedResourceUrl because "rel" contains "stylesheet"');
     link.href = goog.html.TrustedResourceUrl.unwrap(url);
-    const win = link.ownerDocument && link.ownerDocument.defaultView;
-    const nonce = goog.dom.safe.getStyleNonce(win);
+    var win = link.ownerDocument && link.ownerDocument.defaultView;
+    var nonce = goog.dom.safe.getStyleNonce(win);
     if (nonce) {
       link.setAttribute("nonce", nonce);
     }
@@ -181,7 +181,7 @@ goog.dom.safe.setScriptContent = function(script, content) {
 };
 goog.dom.safe.setNonceForScriptElement_ = function(script) {
   var win = script.ownerDocument && script.ownerDocument.defaultView;
-  const nonce = goog.dom.safe.getScriptNonce(win);
+  var nonce = goog.dom.safe.getScriptNonce(win);
   if (nonce) {
     script.setAttribute("nonce", nonce);
   }
@@ -259,13 +259,13 @@ goog.dom.safe.getStyleNonce = function(opt_window) {
 };
 goog.dom.safe.NONCE_PATTERN_ = /^[\w+/_-]+[=]{0,2}$/;
 goog.dom.safe.getNonce_ = function(selector, win) {
-  const doc = (win || goog.global).document;
+  var doc = (win || goog.global).document;
   if (!doc.querySelector) {
     return "";
   }
-  let el = doc.querySelector(selector);
+  var el = doc.querySelector(selector);
   if (el) {
-    const nonce = el["nonce"] || el.getAttribute("nonce");
+    var nonce = el["nonce"] || el.getAttribute("nonce");
     if (nonce && goog.dom.safe.NONCE_PATTERN_.test(nonce)) {
       return nonce;
     }

@@ -2,13 +2,16 @@ goog.loadModule(function(exports) {
   "use strict";
   goog.module("goog.labs.userAgent.util");
   goog.module.declareLegacyNamespace();
-  const {USE_CLIENT_HINTS} = goog.require("goog.labs.userAgent");
-  const {caseInsensitiveContains, contains} = goog.require("goog.string.internal");
-  const ASSUME_CLIENT_HINTS_SUPPORT = false;
+  var $jscomp$destructuring$var5 = goog.require("goog.labs.userAgent");
+  var USE_CLIENT_HINTS = $jscomp$destructuring$var5.USE_CLIENT_HINTS;
+  var $jscomp$destructuring$var6 = goog.require("goog.string.internal");
+  var caseInsensitiveContains = $jscomp$destructuring$var6.caseInsensitiveContains;
+  var contains = $jscomp$destructuring$var6.contains;
+  var ASSUME_CLIENT_HINTS_SUPPORT = false;
   function getNativeUserAgentString() {
-    const navigator = getNavigator();
+    var navigator = getNavigator();
     if (navigator) {
-      const userAgent = navigator.userAgent;
+      var userAgent = navigator.userAgent;
       if (userAgent) {
         return userAgent;
       }
@@ -19,7 +22,7 @@ goog.loadModule(function(exports) {
     if (!USE_CLIENT_HINTS) {
       return null;
     }
-    const navigator = getNavigator();
+    var navigator = getNavigator();
     if (navigator) {
       return navigator.userAgentData || null;
     }
@@ -28,9 +31,9 @@ goog.loadModule(function(exports) {
   function getNavigator() {
     return goog.global.navigator;
   }
-  let userAgentInternal = getNativeUserAgentString();
-  let userAgentDataInternal = getNativeUserAgentData();
-  function setUserAgent(userAgent = undefined) {
+  var userAgentInternal = getNativeUserAgentString();
+  var userAgentDataInternal = getNativeUserAgentData();
+  function setUserAgent(userAgent) {
     userAgentInternal = typeof userAgent === "string" ? userAgent : getNativeUserAgentString();
   }
   function getUserAgent() {
@@ -46,30 +49,34 @@ goog.loadModule(function(exports) {
     return userAgentDataInternal;
   }
   function matchUserAgentDataBrand(str) {
-    const data = getUserAgentData();
+    var data = getUserAgentData();
     if (!data) {
       return false;
     }
-    return data.brands.some(({brand}) => brand && contains(brand, str));
+    return data.brands.some(function($jscomp$destructuring$var7) {
+      var $jscomp$destructuring$var8 = $jscomp$destructuring$var7;
+      var brand = $jscomp$destructuring$var8.brand;
+      return brand && contains(brand, str);
+    });
   }
   function matchUserAgent(str) {
-    const userAgent = getUserAgent();
+    var userAgent = getUserAgent();
     return contains(userAgent, str);
   }
   function matchUserAgentIgnoreCase(str) {
-    const userAgent = getUserAgent();
+    var userAgent = getUserAgent();
     return caseInsensitiveContains(userAgent, str);
   }
   function extractVersionTuples(userAgent) {
-    const versionRegExp = new RegExp("(\\w[\\w ]+)" + "/" + "([^\\s]+)" + "\\s*" + "(?:\\((.*?)\\))?", "g");
-    const data = [];
-    let match;
+    var versionRegExp = new RegExp("(\\w[\\w ]+)" + "/" + "([^\\s]+)" + "\\s*" + "(?:\\((.*?)\\))?", "g");
+    var data = [];
+    var match;
     while (match = versionRegExp.exec(userAgent)) {
       data.push([match[1], match[2], match[3] || undefined]);
     }
     return data;
   }
-  exports = {ASSUME_CLIENT_HINTS_SUPPORT, extractVersionTuples, getNativeUserAgentString, getUserAgent, getUserAgentData, matchUserAgent, matchUserAgentDataBrand, matchUserAgentIgnoreCase, resetUserAgentData, setUserAgent, setUserAgentData,};
+  exports = {ASSUME_CLIENT_HINTS_SUPPORT:ASSUME_CLIENT_HINTS_SUPPORT, extractVersionTuples:extractVersionTuples, getNativeUserAgentString:getNativeUserAgentString, getUserAgent:getUserAgent, getUserAgentData:getUserAgentData, matchUserAgent:matchUserAgent, matchUserAgentDataBrand:matchUserAgentDataBrand, matchUserAgentIgnoreCase:matchUserAgentIgnoreCase, resetUserAgentData:resetUserAgentData, setUserAgent:setUserAgent, setUserAgentData:setUserAgentData,};
   return exports;
 });
 

@@ -1,15 +1,13 @@
 goog.provide("goog.dom.TagName");
 goog.require("goog.dom.HtmlElement");
-goog.dom.TagName = class {
-  static cast(name, type) {
-    return name;
-  }
-  constructor() {
-    this.googDomTagName_doNotImplementThisTypeOrElse_;
-    this.ensureTypeScriptRemembersTypeT_;
-  }
-  toString() {
-  }
+goog.dom.TagName = function() {
+  this.googDomTagName_doNotImplementThisTypeOrElse_;
+  this.ensureTypeScriptRemembersTypeT_;
+};
+goog.dom.TagName.cast = function(name, type) {
+  return name;
+};
+goog.dom.TagName.prototype.toString = function() {
 };
 goog.dom.TagName.A = "A";
 goog.dom.TagName.ABBR = "ABBR";

@@ -2,72 +2,94 @@ goog.loadModule(function(exports) {
   "use strict";
   goog.module("goog.collections.maps");
   goog.module.declareLegacyNamespace();
-  class MapLike {
-    constructor() {
-      this.size;
-    }
-    set(key, val) {
-    }
-    get(key) {
-    }
-    keys() {
-    }
-    values() {
-    }
-    has(key) {
-    }
-  }
+  var MapLike = function() {
+    this.size;
+  };
+  MapLike.prototype.set = function(key, val) {
+  };
+  MapLike.prototype.get = function(key) {
+  };
+  MapLike.prototype.keys = function() {
+  };
+  MapLike.prototype.values = function() {
+  };
+  MapLike.prototype.has = function(key) {
+  };
   exports.MapLike = MapLike;
   function setAll(map, entries) {
     if (!entries) {
       return;
     }
-    for (const [k, v] of entries) {
-      map.set(k, v);
+    for (var $jscomp$iter$0 = $jscomp.makeIterator(entries), $jscomp$key$$jscomp$destructuring$var10 = $jscomp$iter$0.next(); !$jscomp$key$$jscomp$destructuring$var10.done; $jscomp$key$$jscomp$destructuring$var10 = $jscomp$iter$0.next()) {
+      var $jscomp$destructuring$var10 = $jscomp$key$$jscomp$destructuring$var10.value;
+      {
+        var $jscomp$destructuring$var11 = $jscomp.makeIterator($jscomp$destructuring$var10);
+        var k = $jscomp$destructuring$var11.next().value;
+        var v = $jscomp$destructuring$var11.next().value;
+        {
+          map.set(k, v);
+        }
+      }
     }
   }
   exports.setAll = setAll;
-  function hasValue(map, val, valueEqualityFn = defaultEqualityFn) {
-    for (const v of map.values()) {
-      if (valueEqualityFn(v, val)) {
-        return true;
+  function hasValue(map, val, valueEqualityFn) {
+    valueEqualityFn = valueEqualityFn === void 0 ? defaultEqualityFn : valueEqualityFn;
+    for (var $jscomp$iter$1 = $jscomp.makeIterator(map.values()), $jscomp$key$v = $jscomp$iter$1.next(); !$jscomp$key$v.done; $jscomp$key$v = $jscomp$iter$1.next()) {
+      var v = $jscomp$key$v.value;
+      {
+        if (valueEqualityFn(v, val)) {
+          return true;
+        }
       }
     }
     return false;
   }
   exports.hasValue = hasValue;
-  const defaultEqualityFn = (a, b) => a === b;
-  function equals(map, otherMap, valueEqualityFn = defaultEqualityFn) {
+  var defaultEqualityFn = function(a, b) {
+    return a === b;
+  };
+  function equals(map, otherMap, valueEqualityFn) {
+    valueEqualityFn = valueEqualityFn === void 0 ? defaultEqualityFn : valueEqualityFn;
     if (map === otherMap) {
       return true;
     }
     if (map.size !== otherMap.size) {
       return false;
     }
-    for (const key of map.keys()) {
-      if (!otherMap.has(key)) {
-        return false;
-      }
-      if (!valueEqualityFn(map.get(key), otherMap.get(key))) {
-        return false;
+    for (var $jscomp$iter$2 = $jscomp.makeIterator(map.keys()), $jscomp$key$key = $jscomp$iter$2.next(); !$jscomp$key$key.done; $jscomp$key$key = $jscomp$iter$2.next()) {
+      var key = $jscomp$key$key.value;
+      {
+        if (!otherMap.has(key)) {
+          return false;
+        }
+        if (!valueEqualityFn(map.get(key), otherMap.get(key))) {
+          return false;
+        }
       }
     }
     return true;
   }
   exports.equals = equals;
   function transpose(map) {
-    const transposed = new Map();
-    for (const key of map.keys()) {
-      const val = map.get(key);
-      transposed.set(val, key);
+    var transposed = new Map();
+    for (var $jscomp$iter$3 = $jscomp.makeIterator(map.keys()), $jscomp$key$key = $jscomp$iter$3.next(); !$jscomp$key$key.done; $jscomp$key$key = $jscomp$iter$3.next()) {
+      var key = $jscomp$key$key.value;
+      {
+        var val = map.get(key);
+        transposed.set(val, key);
+      }
     }
     return transposed;
   }
   exports.transpose = transpose;
   function toObject(map) {
-    const obj = {};
-    for (const key of map.keys()) {
-      obj[key] = map.get(key);
+    var obj = {};
+    for (var $jscomp$iter$4 = $jscomp.makeIterator(map.keys()), $jscomp$key$key = $jscomp$iter$4.next(); !$jscomp$key$key.done; $jscomp$key$key = $jscomp$iter$4.next()) {
+      var key = $jscomp$key$key.value;
+      {
+        obj[key] = map.get(key);
+      }
     }
     return obj;
   }

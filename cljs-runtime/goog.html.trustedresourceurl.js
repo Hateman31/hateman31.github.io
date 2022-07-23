@@ -8,10 +8,8 @@ goog.require("goog.i18n.bidi.Dir");
 goog.require("goog.i18n.bidi.DirectionalString");
 goog.require("goog.string.Const");
 goog.require("goog.string.TypedString");
-goog.html.TrustedResourceUrl = class {
-  constructor(value, token) {
-    this.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue_ = token === goog.html.TrustedResourceUrl.CONSTRUCTOR_TOKEN_PRIVATE_ ? value : "";
-  }
+goog.html.TrustedResourceUrl = function(value, token) {
+  this.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue_ = token === goog.html.TrustedResourceUrl.CONSTRUCTOR_TOKEN_PRIVATE_ ? value : "";
 };
 goog.html.TrustedResourceUrl.prototype.implementsGoogStringTypedString = true;
 goog.html.TrustedResourceUrl.prototype.getTypedStringValue = function() {
@@ -85,7 +83,7 @@ goog.html.TrustedResourceUrl.fromSafeScript = function(safeScript) {
 };
 goog.html.TrustedResourceUrl.CONSTRUCTOR_TOKEN_PRIVATE_ = {};
 goog.html.TrustedResourceUrl.createTrustedResourceUrlSecurityPrivateDoNotAccessOrElse = function(url) {
-  const policy = goog.html.trustedtypes.getPolicyPrivateDoNotAccessOrElse();
+  var policy = goog.html.trustedtypes.getPolicyPrivateDoNotAccessOrElse();
   var value = policy ? policy.createScriptURL(url) : url;
   return new goog.html.TrustedResourceUrl(value, goog.html.TrustedResourceUrl.CONSTRUCTOR_TOKEN_PRIVATE_);
 };
