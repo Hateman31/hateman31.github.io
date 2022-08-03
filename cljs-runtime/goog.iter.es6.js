@@ -2,99 +2,107 @@ goog.loadModule(function(exports) {
   "use strict";
   goog.module("goog.iter.es6");
   goog.module.declareLegacyNamespace();
-  const GoogIterable = goog.require("goog.iter.Iterable");
-  const GoogIterator = goog.require("goog.iter.Iterator");
-  const StopIteration = goog.require("goog.iter.StopIteration");
-  class ShimIterable {
-    __iterator__() {
+  var GoogIterable = goog.require("goog.iter.Iterable");
+  var GoogIterator = goog.require("goog.iter.Iterator");
+  var StopIteration = goog.require("goog.iter.StopIteration");
+  var ShimIterable = function() {
+  };
+  ShimIterable.prototype.__iterator__ = function() {
+  };
+  ShimIterable.prototype.toGoog = function() {
+  };
+  ShimIterable.prototype.toEs6 = function() {
+  };
+  ShimIterable.of = function(iter) {
+    if (iter instanceof ShimIterableImpl || iter instanceof ShimGoogIterator || iter instanceof ShimEs6Iterator) {
+      return iter;
+    } else if (typeof iter.nextValueOrThrow == "function") {
+      return new ShimIterableImpl(function() {
+        return wrapGoog(iter);
+      });
+    } else if (typeof iter[Symbol.iterator] == "function") {
+      return new ShimIterableImpl(function() {
+        return iter[Symbol.iterator]();
+      });
+    } else if (typeof iter.__iterator__ == "function") {
+      return new ShimIterableImpl(function() {
+        return wrapGoog(iter.__iterator__());
+      });
     }
-    toGoog() {
-    }
-    toEs6() {
-    }
-    static of(iter) {
-      if (iter instanceof ShimIterableImpl || iter instanceof ShimGoogIterator || iter instanceof ShimEs6Iterator) {
-        return iter;
-      } else if (typeof iter.nextValueOrThrow == "function") {
-        return new ShimIterableImpl(() => wrapGoog(iter));
-      } else if (typeof iter[Symbol.iterator] == "function") {
-        return new ShimIterableImpl(() => iter[Symbol.iterator]());
-      } else if (typeof iter.__iterator__ == "function") {
-        return new ShimIterableImpl(() => wrapGoog(iter.__iterator__()));
-      }
-      throw new Error("Not an iterator or iterable.");
-    }
-  }
-  const wrapGoog = iter => {
+    throw new Error("Not an iterator or iterable.");
+  };
+  var wrapGoog = function(iter) {
     if (!(iter instanceof GoogIterator)) {
       return iter;
     }
-    let done = false;
-    return {next() {
-      let value;
+    var done = false;
+    return {next:function() {
+      var value;
       while (!done) {
         try {
           value = iter.nextValueOrThrow();
           break;
-        } catch (err) {
-          if (err !== StopIteration) {
-            throw err;
+        } catch (err$24) {
+          if (err$24 !== StopIteration) {
+            throw err$24;
           }
           done = true;
         }
       }
-      return {value, done};
+      return {value:value, done:done};
     },};
   };
-  class ShimIterableImpl {
-    constructor(func) {
-      this.func_ = func;
+  var ShimIterableImpl = function(func) {
+    this.func_ = func;
+  };
+  ShimIterableImpl.prototype.__iterator__ = function() {
+    return new ShimGoogIterator(this.func_());
+  };
+  ShimIterableImpl.prototype.toGoog = function() {
+    return new ShimGoogIterator(this.func_());
+  };
+  ShimIterableImpl.prototype[Symbol.iterator] = function() {
+    return new ShimEs6Iterator(this.func_());
+  };
+  ShimIterableImpl.prototype.toEs6 = function() {
+    return new ShimEs6Iterator(this.func_());
+  };
+  var ShimGoogIterator = function(iter) {
+    var $jscomp$super$this;
+    $jscomp$super$this = GoogIterator.call(this) || this;
+    $jscomp$super$this.iter_ = iter;
+    return $jscomp$super$this;
+  };
+  $jscomp.inherits(ShimGoogIterator, GoogIterator);
+  ShimGoogIterator.prototype.nextValueOrThrow = function() {
+    var result = this.iter_.next();
+    if (result.done) {
+      throw StopIteration;
     }
-    __iterator__() {
-      return new ShimGoogIterator(this.func_());
-    }
-    toGoog() {
-      return new ShimGoogIterator(this.func_());
-    }
-    [Symbol.iterator]() {
-      return new ShimEs6Iterator(this.func_());
-    }
-    toEs6() {
-      return new ShimEs6Iterator(this.func_());
-    }
-  }
-  class ShimGoogIterator extends GoogIterator {
-    constructor(iter) {
-      super();
-      this.iter_ = iter;
-    }
-    nextValueOrThrow() {
-      const result = this.iter_.next();
-      if (result.done) {
-        throw StopIteration;
-      }
-      return result.value;
-    }
-    toGoog() {
-      return this;
-    }
-    [Symbol.iterator]() {
-      return new ShimEs6Iterator(this.iter_);
-    }
-    toEs6() {
-      return new ShimEs6Iterator(this.iter_);
-    }
-  }
-  class ShimEs6Iterator extends ShimIterableImpl {
-    constructor(iter) {
-      super(() => iter);
-      this.iter_ = iter;
-    }
-    next() {
-      return this.iter_.next();
-    }
-  }
-  exports = {ShimIterable, ShimEs6Iterator, ShimGoogIterator,};
+    return result.value;
+  };
+  ShimGoogIterator.prototype.toGoog = function() {
+    return this;
+  };
+  ShimGoogIterator.prototype[Symbol.iterator] = function() {
+    return new ShimEs6Iterator(this.iter_);
+  };
+  ShimGoogIterator.prototype.toEs6 = function() {
+    return new ShimEs6Iterator(this.iter_);
+  };
+  var ShimEs6Iterator = function(iter) {
+    var $jscomp$super$this;
+    $jscomp$super$this = ShimIterableImpl.call(this, function() {
+      return iter;
+    }) || this;
+    $jscomp$super$this.iter_ = iter;
+    return $jscomp$super$this;
+  };
+  $jscomp.inherits(ShimEs6Iterator, ShimIterableImpl);
+  ShimEs6Iterator.prototype.next = function() {
+    return this.iter_.next();
+  };
+  exports = {ShimIterable:ShimIterable, ShimEs6Iterator:ShimEs6Iterator, ShimGoogIterator:ShimGoogIterator,};
   return exports;
 });
 

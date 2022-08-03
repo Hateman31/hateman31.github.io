@@ -450,7 +450,7 @@ goog.style.installSafeStyleSheet = function(safeStyleSheet, opt_node) {
       body.parentNode.insertBefore(head, body);
     }
     var el = dh.createDom(goog.dom.TagName.STYLE);
-    const nonce = goog.dom.safe.getStyleNonce();
+    var nonce = goog.dom.safe.getStyleNonce();
     if (nonce) {
       el.setAttribute("nonce", nonce);
     }

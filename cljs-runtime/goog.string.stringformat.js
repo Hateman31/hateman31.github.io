@@ -1,17 +1,17 @@
 goog.provide("goog.string.format");
 goog.require("goog.string");
 goog.string.format = function(formatString, var_args) {
-  const args = Array.prototype.slice.call(arguments);
-  const template = args.shift();
+  var args = Array.prototype.slice.call(arguments);
+  var template = args.shift();
   if (typeof template == "undefined") {
     throw new Error("[goog.string.format] Template required");
   }
-  const formatRe = /%([0\- \+]*)(\d+)?(\.(\d+))?([%sfdiu])/g;
+  var formatRe = /%([0\- \+]*)(\d+)?(\.(\d+))?([%sfdiu])/g;
   function replacerDemuxer(match, flags, width, dotp, precision, type, offset, wholeString) {
     if (type == "%") {
       return "%";
     }
-    const value = args.shift();
+    var value = args.shift();
     if (typeof value == "undefined") {
       throw new Error("[goog.string.format] Not enough arguments");
     }
@@ -22,7 +22,7 @@ goog.string.format = function(formatString, var_args) {
 };
 goog.string.format.demuxes_ = {};
 goog.string.format.demuxes_["s"] = function(value, flags, width, dotp, precision, type, offset, wholeString) {
-  let replacement = value;
+  var replacement = value;
   if (isNaN(width) || width == "" || replacement.length >= Number(width)) {
     return replacement;
   }
@@ -34,11 +34,11 @@ goog.string.format.demuxes_["s"] = function(value, flags, width, dotp, precision
   return replacement;
 };
 goog.string.format.demuxes_["f"] = function(value, flags, width, dotp, precision, type, offset, wholeString) {
-  let replacement = value.toString();
+  var replacement = value.toString();
   if (!(isNaN(precision) || precision == "")) {
     replacement = parseFloat(value).toFixed(precision);
   }
-  let sign;
+  var sign;
   if (Number(value) < 0) {
     sign = "-";
   } else if (flags.indexOf("+") >= 0) {
@@ -55,11 +55,11 @@ goog.string.format.demuxes_["f"] = function(value, flags, width, dotp, precision
     return replacement;
   }
   replacement = isNaN(precision) ? Math.abs(Number(value)).toString() : Math.abs(Number(value)).toFixed(precision);
-  const padCount = Number(width) - replacement.length - sign.length;
+  var padCount = Number(width) - replacement.length - sign.length;
   if (flags.indexOf("-", 0) >= 0) {
     replacement = sign + replacement + goog.string.repeat(" ", padCount);
   } else {
-    const paddingChar = flags.indexOf("0", 0) >= 0 ? "0" : " ";
+    var paddingChar = flags.indexOf("0", 0) >= 0 ? "0" : " ";
     replacement = sign + goog.string.repeat(paddingChar, padCount) + replacement;
   }
   return replacement;

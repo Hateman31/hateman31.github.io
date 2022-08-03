@@ -19,7 +19,7 @@ goog.iter.Iterator.prototype.next = function() {
 };
 goog.iter.ES6_ITERATOR_DONE = goog.debug.freeze({done:true, value:undefined});
 goog.iter.createEs6IteratorYield = function(value) {
-  return {value, done:false};
+  return {value:value, done:false};
 };
 goog.iter.toEs4IteratorNext = function(es6NextValue) {
   if (es6NextValue.done) {
@@ -78,9 +78,9 @@ goog.iter.forEach = function(iterable, f, opt_obj) {
       while (true) {
         f.call(opt_obj, iterable.nextValueOrThrow(), undefined, iterable);
       }
-    } catch (ex) {
-      if (ex !== goog.iter.StopIteration) {
-        throw ex;
+    } catch (ex$23) {
+      if (ex$23 !== goog.iter.StopIteration) {
+        throw ex$23;
       }
     }
   }

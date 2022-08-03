@@ -80,9 +80,9 @@ goog.structs.Map.prototype.clear = function() {
   this.version_ = 0;
 };
 goog.structs.Map.prototype.remove = function(key) {
-  return this.delete(key);
+  return this["delete"](key);
 };
-goog.structs.Map.prototype.delete = function(key) {
+goog.structs.Map.prototype["delete"] = function(key) {
   if (goog.structs.Map.hasKey_(this.map_, key)) {
     delete this.map_[key];
     this.setSizeInternal_(this.size - 1);
@@ -190,7 +190,7 @@ goog.structs.Map.prototype.values = function() {
   return goog.iter.es6.ShimIterable.of(this.getValueIterator()).toEs6();
 };
 goog.structs.Map.prototype.entries = function() {
-  const self = this;
+  var self = this;
   return goog.collections.iters.map(this.keys(), function(key) {
     return [key, self.get(key)];
   });

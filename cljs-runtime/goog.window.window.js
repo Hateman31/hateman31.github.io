@@ -27,12 +27,12 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
     var url = typeof linkRef.href != "undefined" ? linkRef.href : String(linkRef);
     safeLinkRef = goog.html.SafeUrl.sanitize(url);
   }
-  const browserSupportsCoop = self.crossOriginIsolation !== undefined;
-  let referrerPolicy = "strict-origin-when-cross-origin";
+  var browserSupportsCoop = self.crossOriginIsolation !== undefined;
+  var referrerPolicy = "strict-origin-when-cross-origin";
   if (window.Request) {
     referrerPolicy = (new Request("/")).referrerPolicy;
   }
-  const pageSetsUnsafeReferrerPolicy = referrerPolicy === "unsafe-url";
+  var pageSetsUnsafeReferrerPolicy = referrerPolicy === "unsafe-url";
   if (browserSupportsCoop && opt_options["noreferrer"]) {
     if (pageSetsUnsafeReferrerPolicy) {
       throw new Error("Cannot use the noreferrer option on a page that sets a referrer-policy of `unsafe-url` in modern browsers!");

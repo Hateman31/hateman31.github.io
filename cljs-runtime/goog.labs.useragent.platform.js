@@ -2,8 +2,8 @@ goog.loadModule(function(exports) {
   "use strict";
   goog.module("goog.labs.userAgent.platform");
   goog.module.declareLegacyNamespace();
-  const googString = goog.require("goog.string.internal");
-  const util = goog.require("goog.labs.userAgent.util");
+  var googString = goog.require("goog.string.internal");
+  var util = goog.require("goog.labs.userAgent.util");
   function isAndroid() {
     return util.matchUserAgent("Android");
   }
@@ -38,11 +38,11 @@ goog.loadModule(function(exports) {
     return util.matchUserAgentIgnoreCase("KaiOS");
   }
   function getVersion() {
-    const userAgentString = util.getUserAgent();
-    let version = "", re;
+    var userAgentString = util.getUserAgent();
+    var version = "", re;
     if (isWindows()) {
       re = /Windows (?:NT|Phone) ([0-9.]+)/;
-      const match = re.exec(userAgentString);
+      var match = re.exec(userAgentString);
       if (match) {
         version = match[1];
       } else {
@@ -50,31 +50,31 @@ goog.loadModule(function(exports) {
       }
     } else if (isIos()) {
       re = /(?:iPhone|iPod|iPad|CPU)\s+OS\s+(\S+)/;
-      const match = re.exec(userAgentString);
-      version = match && match[1].replace(/_/g, ".");
+      var match$16 = re.exec(userAgentString);
+      version = match$16 && match$16[1].replace(/_/g, ".");
     } else if (isMacintosh()) {
       re = /Mac OS X ([0-9_.]+)/;
-      const match = re.exec(userAgentString);
-      version = match ? match[1].replace(/_/g, ".") : "10";
+      var match$17 = re.exec(userAgentString);
+      version = match$17 ? match$17[1].replace(/_/g, ".") : "10";
     } else if (isKaiOS()) {
       re = /(?:KaiOS)\/(\S+)/i;
-      const match = re.exec(userAgentString);
-      version = match && match[1];
+      var match$18 = re.exec(userAgentString);
+      version = match$18 && match$18[1];
     } else if (isAndroid()) {
       re = /Android\s+([^\);]+)(\)|;)/;
-      const match = re.exec(userAgentString);
-      version = match && match[1];
+      var match$19 = re.exec(userAgentString);
+      version = match$19 && match$19[1];
     } else if (isChromeOS()) {
       re = /(?:CrOS\s+(?:i686|x86_64)\s+([0-9.]+))/;
-      const match = re.exec(userAgentString);
-      version = match && match[1];
+      var match$20 = re.exec(userAgentString);
+      version = match$20 && match$20[1];
     }
     return version || "";
   }
   function isVersionOrHigher(version) {
     return googString.compareVersions(getVersion(), version) >= 0;
   }
-  exports = {getVersion, isAndroid, isChromeOS, isChromecast, isIos, isIpad, isIphone, isIpod, isKaiOS, isLinux, isMacintosh, isVersionOrHigher, isWindows,};
+  exports = {getVersion:getVersion, isAndroid:isAndroid, isChromeOS:isChromeOS, isChromecast:isChromecast, isIos:isIos, isIpad:isIpad, isIphone:isIphone, isIpod:isIpod, isKaiOS:isKaiOS, isLinux:isLinux, isMacintosh:isMacintosh, isVersionOrHigher:isVersionOrHigher, isWindows:isWindows,};
   return exports;
 });
 

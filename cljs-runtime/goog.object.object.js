@@ -159,8 +159,8 @@ goog.loadModule(function(exports) {
         return false;
       }
     }
-    for (var k$5 in b) {
-      if (!(k$5 in a)) {
+    for (var k$6 in b) {
+      if (!(k$6 in a)) {
         return false;
       }
     }

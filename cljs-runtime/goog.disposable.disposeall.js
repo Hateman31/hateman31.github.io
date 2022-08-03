@@ -2,10 +2,10 @@ goog.loadModule(function(exports) {
   "use strict";
   goog.module("goog.disposeAll");
   goog.module.declareLegacyNamespace();
-  const dispose = goog.require("goog.dispose");
+  var dispose = goog.require("goog.dispose");
   function disposeAll(var_args) {
-    for (let i = 0, len = arguments.length; i < len; ++i) {
-      const disposable = arguments[i];
+    for (var i = 0, len = arguments.length; i < len; ++i) {
+      var disposable = arguments[i];
       if (goog.isArrayLike(disposable)) {
         disposeAll.apply(null, disposable);
       } else {
