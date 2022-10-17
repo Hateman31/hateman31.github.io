@@ -579,7 +579,7 @@ goog.scope(function() {
   types.TransitArrayMap.prototype["delete"] = function(k) {
     this.hashCode = -1;
     if (this.backingMap) {
-      var ret = this.backingMap["delete"](k);
+      var ret = this.backingMap.delete(k);
       this.size = this.backingMap.size;
       return ret;
     } else {
@@ -847,7 +847,7 @@ goog.scope(function() {
   };
   types.TransitSet.prototype["clear"] = types.TransitSet.prototype.clear;
   types.TransitSet.prototype["delete"] = function(value) {
-    var ret = this.map["delete"](value);
+    var ret = this.map.delete(value);
     this.size = this.map.size;
     return ret;
   };

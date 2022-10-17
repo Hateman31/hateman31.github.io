@@ -30,7 +30,7 @@ goog.dom.getElement = function(element) {
   return goog.dom.getElementHelper_(document, element);
 };
 goog.dom.getHTMLElement = function(id) {
-  var element = goog.dom.getElement(id);
+  const element = goog.dom.getElement(id);
   if (!element) {
     return null;
   }
@@ -80,7 +80,7 @@ goog.dom.getElementByClass = function(className, opt_el) {
   return retVal || null;
 };
 goog.dom.getHTMLElementByClass = function(className, opt_parent) {
-  var element = goog.dom.getElementByClass(className, opt_parent);
+  const element = goog.dom.getElementByClass(className, opt_parent);
   if (!element) {
     return null;
   }
@@ -91,7 +91,7 @@ goog.dom.getRequiredElementByClass = function(className, opt_root) {
   return goog.asserts.assert(retValue, "No element found with className: " + className);
 };
 goog.dom.getRequiredHTMLElementByClass = function(className, opt_parent) {
-  var retValue = goog.dom.getElementByClass(className, opt_parent);
+  const retValue = goog.dom.getElementByClass(className, opt_parent);
   return goog.asserts.assertInstanceof(retValue, HTMLElement, "No HTMLElement found with className: " + className);
 };
 goog.dom.canUseQuerySelector_ = function(parent) {

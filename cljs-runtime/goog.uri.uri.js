@@ -450,7 +450,7 @@ goog.Uri.QueryData.prototype.remove = function(key) {
   if (this.keyMap_.has(key)) {
     this.invalidateCache_();
     this.count_ = goog.asserts.assertNumber(this.count_) - this.keyMap_.get(key).length;
-    return this.keyMap_["delete"](key);
+    return this.keyMap_.delete(key);
   }
   return false;
 };
@@ -482,12 +482,12 @@ goog.Uri.QueryData.prototype.forEach = function(f, opt_scope) {
 };
 goog.Uri.QueryData.prototype.getKeys = function() {
   this.ensureKeyMapInitialized_();
-  var vals = Array.from(this.keyMap_.values());
-  var keys = Array.from(this.keyMap_.keys());
-  var rv = [];
-  for (var i = 0; i < keys.length; i++) {
-    var val = vals[i];
-    for (var j = 0; j < val.length; j++) {
+  const vals = Array.from(this.keyMap_.values());
+  const keys = Array.from(this.keyMap_.keys());
+  const rv = [];
+  for (let i = 0; i < keys.length; i++) {
+    const val = vals[i];
+    for (let j = 0; j < val.length; j++) {
       rv.push(keys[i]);
     }
   }
@@ -495,14 +495,14 @@ goog.Uri.QueryData.prototype.getKeys = function() {
 };
 goog.Uri.QueryData.prototype.getValues = function(opt_key) {
   this.ensureKeyMapInitialized_();
-  var rv = [];
+  let rv = [];
   if (typeof opt_key === "string") {
     if (this.containsKey(opt_key)) {
       rv = rv.concat(this.keyMap_.get(this.getKeyName_(opt_key)));
     }
   } else {
-    var values = Array.from(this.keyMap_.values());
-    for (var i = 0; i < values.length; i++) {
+    const values = Array.from(this.keyMap_.values());
+    for (let i = 0; i < values.length; i++) {
       rv = rv.concat(values[i]);
     }
   }
@@ -541,12 +541,12 @@ goog.Uri.QueryData.prototype.toString = function() {
   if (!this.keyMap_) {
     return "";
   }
-  var sb = [];
-  var keys = Array.from(this.keyMap_.keys());
+  const sb = [];
+  const keys = Array.from(this.keyMap_.keys());
   for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
-    var encodedKey = goog.string.urlEncode(key);
-    var val = this.getValues(key);
+    const key = keys[i];
+    const encodedKey = goog.string.urlEncode(key);
+    const val = this.getValues(key);
     for (var j = 0; j < val.length; j++) {
       var param = encodedKey;
       if (val[j] !== "") {

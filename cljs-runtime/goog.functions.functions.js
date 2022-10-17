@@ -33,7 +33,7 @@ goog.functions.fail = function(err) {
 goog.functions.lock = function(f, opt_numArgs) {
   opt_numArgs = opt_numArgs || 0;
   return function() {
-    var self = this;
+    const self = this;
     return f.apply(self, Array.prototype.slice.call(arguments, 0, opt_numArgs));
   };
 };
@@ -43,13 +43,13 @@ goog.functions.nth = function(n) {
   };
 };
 goog.functions.partialRight = function(fn, var_args) {
-  var rightArgs = Array.prototype.slice.call(arguments, 1);
+  const rightArgs = Array.prototype.slice.call(arguments, 1);
   return function() {
-    var self = this;
+    let self = this;
     if (self === goog.global) {
       self = undefined;
     }
-    var newArgs = Array.prototype.slice.call(arguments);
+    const newArgs = Array.prototype.slice.call(arguments);
     newArgs.push.apply(newArgs, rightArgs);
     return fn.apply(self, newArgs);
   };
@@ -63,38 +63,38 @@ goog.functions.equalTo = function(value, opt_useLooseComparison) {
   };
 };
 goog.functions.compose = function(fn, var_args) {
-  var functions = arguments;
-  var length = functions.length;
+  const functions = arguments;
+  const length = functions.length;
   return function() {
-    var self = this;
-    var result;
+    const self = this;
+    let result;
     if (length) {
       result = functions[length - 1].apply(self, arguments);
     }
-    for (var i = length - 2; i >= 0; i--) {
+    for (let i = length - 2; i >= 0; i--) {
       result = functions[i].call(self, result);
     }
     return result;
   };
 };
 goog.functions.sequence = function(var_args) {
-  var functions = arguments;
-  var length = functions.length;
+  const functions = arguments;
+  const length = functions.length;
   return function() {
-    var self = this;
-    var result;
-    for (var i = 0; i < length; i++) {
+    const self = this;
+    let result;
+    for (let i = 0; i < length; i++) {
       result = functions[i].apply(self, arguments);
     }
     return result;
   };
 };
 goog.functions.and = function(var_args) {
-  var functions = arguments;
-  var length = functions.length;
+  const functions = arguments;
+  const length = functions.length;
   return function() {
-    var self = this;
-    for (var i = 0; i < length; i++) {
+    const self = this;
+    for (let i = 0; i < length; i++) {
       if (!functions[i].apply(self, arguments)) {
         return false;
       }
@@ -103,11 +103,11 @@ goog.functions.and = function(var_args) {
   };
 };
 goog.functions.or = function(var_args) {
-  var functions = arguments;
-  var length = functions.length;
+  const functions = arguments;
+  const length = functions.length;
   return function() {
-    var self = this;
-    for (var i = 0; i < length; i++) {
+    const self = this;
+    for (let i = 0; i < length; i++) {
       if (functions[i].apply(self, arguments)) {
         return true;
       }
@@ -117,22 +117,22 @@ goog.functions.or = function(var_args) {
 };
 goog.functions.not = function(f) {
   return function() {
-    var self = this;
+    const self = this;
     return !f.apply(self, arguments);
   };
 };
 goog.functions.create = function(constructor, var_args) {
-  var temp = function() {
+  const temp = function() {
   };
   temp.prototype = constructor.prototype;
-  var obj = new temp();
+  const obj = new temp();
   constructor.apply(obj, Array.prototype.slice.call(arguments, 1));
   return obj;
 };
 goog.functions.CACHE_RETURN_VALUE = goog.define("goog.functions.CACHE_RETURN_VALUE", true);
 goog.functions.cacheReturnValue = function(fn) {
-  var called = false;
-  var value;
+  let called = false;
+  let value;
   return function() {
     if (!goog.functions.CACHE_RETURN_VALUE) {
       return fn();
@@ -145,39 +145,39 @@ goog.functions.cacheReturnValue = function(fn) {
   };
 };
 goog.functions.once = function(f) {
-  var inner = f;
+  let inner = f;
   return function() {
     if (inner) {
-      var tmp = inner;
+      const tmp = inner;
       inner = null;
       tmp();
     }
   };
 };
 goog.functions.debounce = function(f, interval, opt_scope) {
-  var timeout = 0;
+  let timeout = 0;
   return function(var_args) {
     goog.global.clearTimeout(timeout);
-    var args = arguments;
+    const args = arguments;
     timeout = goog.global.setTimeout(function() {
       f.apply(opt_scope, args);
     }, interval);
   };
 };
 goog.functions.throttle = function(f, interval, opt_scope) {
-  var timeout = 0;
-  var shouldFire = false;
-  var storedArgs = [];
-  var handleTimeout = function() {
+  let timeout = 0;
+  let shouldFire = false;
+  let storedArgs = [];
+  const handleTimeout = function() {
     timeout = 0;
     if (shouldFire) {
       shouldFire = false;
       fire();
     }
   };
-  var fire = function() {
+  const fire = function() {
     timeout = goog.global.setTimeout(handleTimeout, interval);
-    var args = storedArgs;
+    let args = storedArgs;
     storedArgs = [];
     f.apply(opt_scope, args);
   };
@@ -191,8 +191,8 @@ goog.functions.throttle = function(f, interval, opt_scope) {
   };
 };
 goog.functions.rateLimit = function(f, interval, opt_scope) {
-  var timeout = 0;
-  var handleTimeout = function() {
+  let timeout = 0;
+  const handleTimeout = function() {
     timeout = 0;
   };
   return function(var_args) {
@@ -202,7 +202,7 @@ goog.functions.rateLimit = function(f, interval, opt_scope) {
     }
   };
 };
-goog.functions.isFunction = function(val) {
+goog.functions.isFunction = val => {
   return typeof val === "function";
 };
 

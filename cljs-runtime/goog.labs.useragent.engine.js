@@ -2,9 +2,9 @@ goog.loadModule(function(exports) {
   "use strict";
   goog.module("goog.labs.userAgent.engine");
   goog.module.declareLegacyNamespace();
-  var googArray = goog.require("goog.array");
-  var googString = goog.require("goog.string.internal");
-  var util = goog.require("goog.labs.userAgent.util");
+  const googArray = goog.require("goog.array");
+  const googString = goog.require("goog.string.internal");
+  const util = goog.require("goog.labs.userAgent.util");
   function isPresto() {
     return util.matchUserAgent("Presto");
   }
@@ -21,20 +21,20 @@ goog.loadModule(function(exports) {
     return util.matchUserAgent("Gecko") && !isWebKit() && !isTrident() && !isEdge();
   }
   function getVersion() {
-    var userAgentString = util.getUserAgent();
+    const userAgentString = util.getUserAgent();
     if (userAgentString) {
-      var tuples = util.extractVersionTuples(userAgentString);
-      var engineTuple = getEngineTuple(tuples);
+      const tuples = util.extractVersionTuples(userAgentString);
+      const engineTuple = getEngineTuple(tuples);
       if (engineTuple) {
         if (engineTuple[0] == "Gecko") {
           return getVersionForKey(tuples, "Firefox");
         }
         return engineTuple[1];
       }
-      var browserTuple = tuples[0];
-      var info;
+      const browserTuple = tuples[0];
+      let info;
       if (browserTuple && (info = browserTuple[2])) {
-        var match = /Trident\/([^\s;]+)/.exec(info);
+        const match = /Trident\/([^\s;]+)/.exec(info);
         if (match) {
           return match[1];
         }
@@ -46,8 +46,8 @@ goog.loadModule(function(exports) {
     if (!isEdge()) {
       return tuples[1];
     }
-    for (var i = 0; i < tuples.length; i++) {
-      var tuple = tuples[i];
+    for (let i = 0; i < tuples.length; i++) {
+      const tuple = tuples[i];
       if (tuple[0] == "Edge") {
         return tuple;
       }
@@ -57,12 +57,12 @@ goog.loadModule(function(exports) {
     return googString.compareVersions(getVersion(), version) >= 0;
   }
   function getVersionForKey(tuples, key) {
-    var pair = googArray.find(tuples, function(pair) {
+    const pair = googArray.find(tuples, function(pair) {
       return key == pair[0];
     });
     return pair && pair[1] || "";
   }
-  exports = {getVersion:getVersion, isEdge:isEdge, isGecko:isGecko, isPresto:isPresto, isTrident:isTrident, isVersionOrHigher:isVersionOrHigher, isWebKit:isWebKit,};
+  exports = {getVersion, isEdge, isGecko, isPresto, isTrident, isVersionOrHigher, isWebKit,};
   return exports;
 });
 

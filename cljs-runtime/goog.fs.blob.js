@@ -1,9 +1,9 @@
 goog.provide("goog.fs.blob");
 goog.fs.blob.getBlob = function(var_args) {
-  var BlobBuilder = goog.global.BlobBuilder || goog.global.WebKitBlobBuilder;
+  const BlobBuilder = goog.global.BlobBuilder || goog.global.WebKitBlobBuilder;
   if (BlobBuilder !== undefined) {
-    var bb = new BlobBuilder();
-    for (var i = 0; i < arguments.length; i++) {
+    const bb = new BlobBuilder();
+    for (let i = 0; i < arguments.length; i++) {
       bb.append(arguments[i]);
     }
     return bb.getBlob();
@@ -12,15 +12,15 @@ goog.fs.blob.getBlob = function(var_args) {
   }
 };
 goog.fs.blob.getBlobWithProperties = function(parts, opt_type, opt_endings) {
-  var BlobBuilder = goog.global.BlobBuilder || goog.global.WebKitBlobBuilder;
+  const BlobBuilder = goog.global.BlobBuilder || goog.global.WebKitBlobBuilder;
   if (BlobBuilder !== undefined) {
-    var bb = new BlobBuilder();
-    for (var i = 0; i < parts.length; i++) {
+    const bb = new BlobBuilder();
+    for (let i = 0; i < parts.length; i++) {
       bb.append(parts[i], opt_endings);
     }
     return bb.getBlob(opt_type);
   } else if (goog.global.Blob !== undefined) {
-    var properties = {};
+    const properties = {};
     if (opt_type) {
       properties["type"] = opt_type;
     }

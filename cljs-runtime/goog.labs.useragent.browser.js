@@ -2,13 +2,12 @@ goog.loadModule(function(exports) {
   "use strict";
   goog.module("goog.labs.userAgent.browser");
   goog.module.declareLegacyNamespace();
-  var googArray = goog.require("goog.array");
-  var googObject = goog.require("goog.object");
-  var util = goog.require("goog.labs.userAgent.util");
-  var $jscomp$destructuring$var9 = goog.require("goog.string.internal");
-  var compareVersions = $jscomp$destructuring$var9.compareVersions;
+  const googArray = goog.require("goog.array");
+  const googObject = goog.require("goog.object");
+  const util = goog.require("goog.labs.userAgent.util");
+  const {compareVersions} = goog.require("goog.string.internal");
   function useUserAgentBrand() {
-    var userAgentData = util.getUserAgentData();
+    const userAgentData = util.getUserAgentData();
     return !!userAgentData && userAgentData.brands.length > 0;
   }
   function matchOpera() {
@@ -71,17 +70,17 @@ goog.loadModule(function(exports) {
   function matchAndroidBrowser() {
     return util.matchUserAgent("Android") && !(isChrome() || isFirefox() || isOpera() || isSilk());
   }
-  var isOpera = matchOpera;
-  var isIE = matchIE;
-  var isEdge = matchEdgeHtml;
-  var isEdgeChromium = matchEdgeChromium;
-  var isOperaChromium = matchOperaChromium;
-  var isFirefox = matchFirefox;
-  var isSafari = matchSafari;
-  var isCoast = matchCoast;
-  var isIosWebview = matchIosWebview;
-  var isChrome = matchChrome;
-  var isAndroidBrowser = matchAndroidBrowser;
+  const isOpera = matchOpera;
+  const isIE = matchIE;
+  const isEdge = matchEdgeHtml;
+  const isEdgeChromium = matchEdgeChromium;
+  const isOperaChromium = matchOperaChromium;
+  const isFirefox = matchFirefox;
+  const isSafari = matchSafari;
+  const isCoast = matchCoast;
+  const isIosWebview = matchIosWebview;
+  const isChrome = matchChrome;
+  const isAndroidBrowser = matchAndroidBrowser;
   function isSilk() {
     if (useUserAgentBrand()) {
       return util.matchUserAgentDataBrand("Silk");
@@ -89,20 +88,20 @@ goog.loadModule(function(exports) {
     return util.matchUserAgent("Silk");
   }
   function getVersion() {
-    var userAgentString = util.getUserAgent();
+    const userAgentString = util.getUserAgent();
     if (isIE()) {
       return getIEVersion(userAgentString);
     }
-    var versionTuples = util.extractVersionTuples(userAgentString);
-    var versionMap = {};
-    versionTuples.forEach(function(tuple) {
-      var key = tuple[0];
-      var value = tuple[1];
+    const versionTuples = util.extractVersionTuples(userAgentString);
+    const versionMap = {};
+    versionTuples.forEach(tuple => {
+      const key = tuple[0];
+      const value = tuple[1];
       versionMap[key] = value;
     });
-    var versionMapHasKey = goog.partial(googObject.containsKey, versionMap);
+    const versionMapHasKey = goog.partial(googObject.containsKey, versionMap);
     function lookUpValueWithKeys(keys) {
-      var key = googArray.find(keys, versionMapHasKey);
+      const key = googArray.find(keys, versionMapHasKey);
       return versionMap[key] || "";
     }
     if (isOpera()) {
@@ -117,21 +116,21 @@ goog.loadModule(function(exports) {
     if (isChrome()) {
       return lookUpValueWithKeys(["Chrome", "CriOS", "HeadlessChrome"]);
     }
-    var tuple = versionTuples[2];
+    const tuple = versionTuples[2];
     return tuple && tuple[1] || "";
   }
   function isVersionOrHigher(version) {
     return compareVersions(getVersion(), version) >= 0;
   }
   function getIEVersion(userAgent) {
-    var rv = /rv: *([\d\.]*)/.exec(userAgent);
+    const rv = /rv: *([\d\.]*)/.exec(userAgent);
     if (rv && rv[1]) {
       return rv[1];
     }
-    var version = "";
-    var msie = /MSIE +([\d\.]+)/.exec(userAgent);
+    let version = "";
+    const msie = /MSIE +([\d\.]+)/.exec(userAgent);
     if (msie && msie[1]) {
-      var tridentVersion = /Trident\/(\d.\d)/.exec(userAgent);
+      const tridentVersion = /Trident\/(\d.\d)/.exec(userAgent);
       if (msie[1] == "7.0") {
         if (tridentVersion && tridentVersion[1]) {
           switch(tridentVersion[1]) {
@@ -157,7 +156,7 @@ goog.loadModule(function(exports) {
     }
     return version;
   }
-  exports = {getVersion:getVersion, isAndroidBrowser:isAndroidBrowser, isChrome:isChrome, isCoast:isCoast, isEdge:isEdge, isEdgeChromium:isEdgeChromium, isFirefox:isFirefox, isIE:isIE, isIosWebview:isIosWebview, isOpera:isOpera, isOperaChromium:isOperaChromium, isSafari:isSafari, isSilk:isSilk, isVersionOrHigher:isVersionOrHigher,};
+  exports = {getVersion, isAndroidBrowser, isChrome, isCoast, isEdge, isEdgeChromium, isFirefox, isIE, isIosWebview, isOpera, isOperaChromium, isSafari, isSilk, isVersionOrHigher,};
   return exports;
 });
 
