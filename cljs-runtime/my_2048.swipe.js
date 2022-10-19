@@ -66,7 +66,7 @@ var swipe_pipe = (function (ts){
 var touch0 = (ts.touches[(0)]);
 var x0 = touch0.pageX;
 var y0 = touch0.pageY;
-return touch_move.pipe(module$node_modules$rxjs$dist$cjs$index.tap(cljs.core.println),my_2048.swipe.one_touch_QMARK_,module$node_modules$rxjs$dist$cjs$index.map(my_2048.swipe.get_xy),module$node_modules$rxjs$dist$cjs$index.map((function (p__11334,_){
+return touch_move.pipe(my_2048.swipe.one_touch_QMARK_,module$node_modules$rxjs$dist$cjs$index.map(my_2048.swipe.get_xy),module$node_modules$rxjs$dist$cjs$index.map((function (p__11334,_){
 var vec__11335 = p__11334;
 var nx = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__11335,(0),null);
 var ny = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__11335,(1),null);
@@ -113,11 +113,7 @@ var direction = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__11372,(1),null)
 return direction;
 })));
 });
-var drag = touch_start.pipe(my_2048.swipe.one_touch_QMARK_,module$node_modules$rxjs$dist$cjs$index.tap((function (){
-return cljs.core.println.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2(["ololo"], 0));
-})),module$node_modules$rxjs$dist$cjs$index.switchMap(swipe_pipe));
-touch_move.subscribe(cljs.core.println);
-
+var drag = touch_start.pipe(my_2048.swipe.one_touch_QMARK_,module$node_modules$rxjs$dist$cjs$index.switchMap(swipe_pipe));
 return drag;
 });
 
