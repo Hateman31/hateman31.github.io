@@ -9,11 +9,11 @@ var y__5134__auto__ = h;
 return ((x__5133__auto__ < y__5134__auto__) ? x__5133__auto__ : y__5134__auto__);
 })());
 })();
-my_2048.core.tile_size = (function (){var f1 = (function (p1__11375_SHARP_){
-return (p1__11375_SHARP_ - (9));
+my_2048.core.tile_size = (function (){var f1 = (function (p1__11396_SHARP_){
+return (p1__11396_SHARP_ - (9));
 });
-var f2 = (function (p1__11376_SHARP_){
-return (p1__11376_SHARP_ / (4));
+var f2 = (function (p1__11397_SHARP_){
+return (p1__11397_SHARP_ / (4));
 });
 return f2(f1(my_2048.core.game.width));
 })();
@@ -30,8 +30,8 @@ my_2048.core.game_state = cljs.core.atom.cljs$core$IFn$_invoke$arity$1(my_2048.g
 my_2048.core.prev_game_state = cljs.core.atom.cljs$core$IFn$_invoke$arity$1(cljs.core.PersistentVector.EMPTY);
 my_2048.core.score = cljs.core.atom.cljs$core$IFn$_invoke$arity$1(my_2048.game.get_score(cljs.core.deref(my_2048.core.game_state)));
 my_2048.core.update_field_BANG_ = (function my_2048$core$update_field_BANG_(direction){
-var shift = (function (p1__11377_SHARP_){
-return my_2048.game.update_grid(p1__11377_SHARP_,direction);
+var shift = (function (p1__11398_SHARP_){
+return my_2048.game.update_grid(p1__11398_SHARP_,direction);
 });
 if(cljs.core.truth_((function (){var and__5043__auto__ = direction;
 if(cljs.core.truth_(and__5043__auto__)){
@@ -65,22 +65,22 @@ cljs.core.reset_BANG_(my_2048.core.game_state,cljs.core.deref(my_2048.core.prev_
 return (my_2048.core.undobtn.disabled = true);
 }));
 
-cljs.core.add_watch(my_2048.core.game_state,new cljs.core.Keyword(null,"updating","updating",1454028951),(function (p1__11380_SHARP_,p2__11381_SHARP_,p3__11379_SHARP_,p4__11378_SHARP_){
-my_2048.core.render_game(p4__11378_SHARP_);
+cljs.core.add_watch(my_2048.core.game_state,new cljs.core.Keyword(null,"updating","updating",1454028951),(function (p1__11403_SHARP_,p2__11404_SHARP_,p3__11402_SHARP_,p4__11401_SHARP_){
+my_2048.core.render_game(p4__11401_SHARP_);
 
-cljs.core.reset_BANG_(my_2048.core.prev_game_state,p3__11379_SHARP_);
+cljs.core.reset_BANG_(my_2048.core.prev_game_state,p3__11402_SHARP_);
 
 (my_2048.core.undobtn.disabled = false);
 
 cljs.core.swap_BANG_.cljs$core$IFn$_invoke$arity$2(my_2048.core.score,(function (){
-return my_2048.game.get_score(p4__11378_SHARP_);
+return my_2048.game.get_score(p4__11401_SHARP_);
 }));
 
 return my_2048.core.render_score(cljs.core.deref(my_2048.core.score));
 }));
 
-cljs.core.add_watch(my_2048.core.game_state,new cljs.core.Keyword(null,"game-ending","game-ending",-972968126),(function (p1__11383_SHARP_,p2__11384_SHARP_,p3__11385_SHARP_,p4__11382_SHARP_){
-var game_state = p4__11382_SHARP_;
+cljs.core.add_watch(my_2048.core.game_state,new cljs.core.Keyword(null,"game-ending","game-ending",-972968126),(function (p1__11406_SHARP_,p2__11407_SHARP_,p3__11408_SHARP_,p4__11405_SHARP_){
+var game_state = p4__11405_SHARP_;
 if(cljs.core.truth_(my_2048.game.win_QMARK_(game_state))){
 return alert("You won!");
 } else {
